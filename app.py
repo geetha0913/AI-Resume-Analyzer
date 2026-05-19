@@ -1,15 +1,16 @@
 from flask import Flask, render_template, request
-import os
 from PyPDF2 import PdfReader
+import os
 
 app = Flask(__name__)
 
+# Upload folder
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-import os
-
+# Create uploads folder automatically
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 @app.route('/')
 def home():
@@ -19,14 +20,17 @@ def home():
 @app.route('/upload', methods=['POST'])
 def upload_resume():
 
+    # Check file uploaded
     if 'resume' not in request.files:
         return "No file uploaded"
 
     file = request.files['resume']
 
+    # Check filename
     if file.filename == '':
         return "No selected file"
 
+    # Save uploaded file
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
 
     file.save(filepath)
