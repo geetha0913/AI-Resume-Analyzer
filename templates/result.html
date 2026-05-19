@@ -15,13 +15,25 @@
 
         <h1>Resume Analysis Result</h1>
 
-        <h2>ATS Score</h2>
+        <div class="score-card">
 
-        <h3>{{ ats_score }}%</h3>
+    <h2>ATS Score</h2>
 
-        <h2>Job Match Score</h2>
+    <div class="score-value">
+        {{ ats_score }}%
+    </div>
 
-        <h3>{{ match_score }}%</h3>
+</div>
+
+<div class="score-card">
+
+    <h2>Job Match Score</h2>
+
+    <div class="score-value">
+        {{ match_score }}%
+    </div>
+
+</div>
 
         <h2>Extracted Skills</h2>
 
