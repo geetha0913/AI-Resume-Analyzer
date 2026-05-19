@@ -47,7 +47,7 @@ def upload_resume():
             resume_text += text
 
     # Get Job Description
-    job_description = request.form['job_description']
+    job_description = request.form.get('job_description', '')
 
     # Skills List
     skills = [
