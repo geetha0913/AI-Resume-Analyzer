@@ -20,7 +20,7 @@ def home():
 @app.route('/upload', methods=['POST'])
 def upload_resume():
 
-    # Check file uploaded
+    # Check if file uploaded
     if 'resume' not in request.files:
         return "No file uploaded"
 
@@ -30,7 +30,7 @@ def upload_resume():
     if file.filename == '':
         return "No selected file"
 
-    # Save uploaded file
+    # Save file
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
 
     file.save(filepath)
@@ -45,6 +45,9 @@ def upload_resume():
 
         if text:
             resume_text += text
+
+    # Get Job Description
+    job_description = request.form['job_description']
 
     # Skills List
     skills = [
@@ -64,7 +67,7 @@ def upload_resume():
         "Bootstrap"
     ]
 
-    # Extracted Skills
+    # Extract Skills
     extracted_skills = []
 
     for skill in skills:
@@ -84,6 +87,37 @@ def upload_resume():
     for skill in skills:
         if skill not in extracted_skills:
             missing_skills.append(skill)
+
+    # Job Description Matching
+    job_keywords = []
+
+    job_words = job_description.lower().split()
+
+    for word in job_words:
+
+        clean_word = word.strip(",.!?()[]{}")
+
+        if len(clean_word) > 3:
+
+            if clean_word not in job_keywords:
+                job_keywords.append(clean_word)
+
+    matched_keywords = []
+
+    for keyword in job_keywords:
+
+        if keyword in resume_text.lower():
+            matched_keywords.append(keyword)
+
+    # Match Score
+    if len(job_keywords) > 0:
+
+        match_score = int(
+            (len(matched_keywords) / len(job_keywords)) * 100
+        )
+
+    else:
+        match_score = 0
 
     # Recommended Jobs
     recommended_jobs = []
@@ -110,13 +144,13 @@ def upload_resume():
         suggestions.append("Learn SQL for database-related roles.")
 
     if "Machine Learning" not in extracted_skills:
-        suggestions.append("Add Machine Learning projects to strengthen your AI profile.")
+        suggestions.append("Add Machine Learning projects.")
 
     if "GitHub" not in extracted_skills:
-        suggestions.append("Include GitHub projects in your resume.")
+        suggestions.append("Include GitHub projects.")
 
     if ats_score < 70:
-        suggestions.append("Improve your resume by adding more technical skills.")
+        suggestions.append("Improve your resume with more technical skills.")
 
     if "React" in extracted_skills and "Flask" in extracted_skills:
         suggestions.append("You are suitable for Full Stack Development roles.")
@@ -128,7 +162,9 @@ def upload_resume():
         missing_skills=missing_skills,
         recommended_jobs=recommended_jobs,
         suggestions=suggestions,
-        resume_text=resume_text
+        resume_text=resume_text,
+        match_score=match_score,
+        matched_keywords=matched_keywords
     )
 
 

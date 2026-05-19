@@ -1,68 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analysis Result</title>
+
+    <title>Resume Analysis Result</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 <body>
 
     <div class="container">
+
         <h1>Resume Analysis Result</h1>
 
-<div class="score-card">
-    <h2>ATS Score: {{ ats_score }}%</h2>
-</div>
+        <h2>ATS Score</h2>
 
-<div class="section">
-    <h3>Extracted Skills</h3>
+        <h3>{{ ats_score }}%</h3>
 
-    <ul>
-        {% for skill in extracted_skills %}
-            <li>{{ skill }}</li>
-        {% endfor %}
-    </ul>
-</div>
+        <h2>Job Match Score</h2>
 
-<div class="section">
-    <h3>Missing Skills</h3>
+        <h3>{{ match_score }}%</h3>
 
-    <ul>
-        {% for skill in missing_skills %}
-            <li>{{ skill }}</li>
-        {% endfor %}
-    </ul>
-</div>
+        <h2>Extracted Skills</h2>
 
-<div class="section">
-    <h3>Resume Content</h3>
+        <ul>
+            {% for skill in extracted_skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
 
-    <div class="resume-box">
-        {{ resume_text }}
+        <h2>Missing Skills</h2>
+
+        <ul>
+            {% for skill in missing_skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Matched Keywords</h2>
+
+        <ul>
+            {% for keyword in matched_keywords %}
+                <li>{{ keyword }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Recommended Jobs</h2>
+
+        <ul>
+            {% for job in recommended_jobs %}
+                <li>{{ job }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>AI Suggestions</h2>
+
+        <ul>
+            {% for suggestion in suggestions %}
+                <li>{{ suggestion }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Resume Content</h2>
+
+        <div class="resume-box">
+            {{ resume_text }}
+        </div>
+
     </div>
-</div>
-
-<div class="section">
-    <h3>Recommended Jobs</h3>
-
-    <ul>
-        {% for job in recommended_jobs %}
-            <li>{{ job }}</li>
-        {% endfor %}
-    </ul>
-</div>
-
-<div class="section">
-    <h3>AI Resume Suggestions</h3>
-
-    <ul>
-        {% for suggestion in suggestions %}
-            <li>{{ suggestion }}</li>
-        {% endfor %}
-    </ul>
-</div>
 
 </body>
+
 </html>
