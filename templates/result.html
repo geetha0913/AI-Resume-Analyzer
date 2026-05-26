@@ -15,70 +15,131 @@
 
         <h1>Resume Analysis Result</h1>
 
+        <!-- ATS SCORE -->
+
         <div class="score-card">
 
-    <h2>ATS Score</h2>
+            <div class="score-title">
+                ATS Score
+            </div>
 
-    <div class="score-value">
-        {{ ats_score }}%
-    </div>
+            <div class="circle" style="--percent: {{ ats_score }};">
+                <span>{{ ats_score }}%</span>
+            </div>
 
-</div>
+        </div>
 
-<div class="score-card">
+        <!-- JOB MATCH SCORE -->
 
-    <h2>Job Match Score</h2>
+        <div class="score-card">
 
-    <div class="score-value">
-        {{ match_score }}%
-    </div>
+            <div class="score-title">
+                Job Match Score
+            </div>
 
-</div>
+            <div class="circle" style="--percent: {{ match_score }};">
+                <span>{{ match_score }}%</span>
+            </div>
+
+        </div>
+
+        <!-- EXTRACTED SKILLS -->
 
         <h2>Extracted Skills</h2>
 
-        <ul>
+        <div class="skills-container">
+
             {% for skill in extracted_skills %}
-                <li>{{ skill }}</li>
+
+                <div class="skill-box">
+
+                    <div class="skill-header">
+
+                        <span>{{ skill }}</span>
+
+                        <span>{{ skill_scores.get(skill, 70) }}%</span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width: {{ skill_scores.get(skill, 70) }}%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
             {% endfor %}
-        </ul>
+
+        </div>
+
+        <!-- MISSING SKILLS -->
 
         <h2>Missing Skills</h2>
 
         <ul>
+
             {% for skill in missing_skills %}
+
                 <li>{{ skill }}</li>
+
             {% endfor %}
+
         </ul>
+
+        <!-- MATCHED KEYWORDS -->
 
         <h2>Matched Keywords</h2>
 
         <ul>
+
             {% for keyword in matched_keywords %}
+
                 <li>{{ keyword }}</li>
+
             {% endfor %}
+
         </ul>
+
+        <!-- RECOMMENDED JOBS -->
 
         <h2>Recommended Jobs</h2>
 
         <ul>
+
             {% for job in recommended_jobs %}
+
                 <li>{{ job }}</li>
+
             {% endfor %}
+
         </ul>
+
+        <!-- AI SUGGESTIONS -->
 
         <h2>AI Suggestions</h2>
 
         <ul>
+
             {% for suggestion in suggestions %}
+
                 <li>{{ suggestion }}</li>
+
             {% endfor %}
+
         </ul>
+
+        <!-- RESUME CONTENT -->
 
         <h2>Resume Content</h2>
 
         <div class="resume-box">
+
             {{ resume_text }}
+
         </div>
 
     </div>

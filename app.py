@@ -70,6 +70,21 @@ def upload_resume():
     # Extract Skills
     extracted_skills = []
 
+    skill_scores = {
+    "Python": 90,
+    "Java": 80,
+    "Flask": 75,
+    "Django": 70,
+    "HTML": 95,
+    "CSS": 90,
+    "JavaScript": 88,
+    "React": 85,
+    "Git": 80,
+    "GitHub": 82,
+    "API": 78,
+    "Bootstrap": 75
+}
+
     for skill in skills:
         if skill.lower() in resume_text.lower():
             extracted_skills.append(skill)
@@ -164,7 +179,8 @@ def upload_resume():
         suggestions=suggestions,
         resume_text=resume_text,
         match_score=match_score,
-        matched_keywords=matched_keywords
+        matched_keywords=matched_keywords,
+        skill_scores=skill_scores
     )
 
 
